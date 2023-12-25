@@ -31,6 +31,18 @@ int dungeon(int row, int col, char **map, int * const x, int * const y, char c){
 	for(int yy = 0; yy < row; yy++){
 		for(int xx = 0; xx < col; xx++){
 			if(map[yy][xx] == ' ') mvaddch(yy, xx, ' ');
+			else if(yy == 0 || yy == row-1){
+				map[yy][xx] == '%';
+				mvaddch(yy, xx, '%');
+			}
+			else if(xx == 0 || xx == col-1){
+				map[yy][xx] == '%';
+				mvaddch(yy, xx, '%');
+			}
+//			else if(yy == row-1){
+//				map[yy][xx] == ' ';
+//				mvaddch(yy, xx, ' ');
+//			}
 			else mvaddch(yy, xx, '#');
 		}
 	}
@@ -72,6 +84,9 @@ int dungeon(int row, int col, char **map, int * const x, int * const y, char c){
 	else if(c == 'd' && map[*y][(*x)+1] == ' ') (*x)++;
 	
 	mvaddch(*y, *x, '@'); //print the character to the screen with a spesific x and y coordinates
+	mvaddch(row, 0, '%');
+	mvaddch(row, col-1, '%');
+	mvprintw(row, 2, "Rows: %d, Cols: %d % where i left off in the the vid is 10.00", row, col);
 }
 
 //int movement(char c, int * const x, int * const y) // a constant pointer to a changable value if (const int *p) it makes the value inside the pointer const not the pointer it self
@@ -95,6 +110,7 @@ int main(){
 	
 	getmaxyx(stdscr, row, col); // get the screen maximum or the screen size in character wise units
 //	printw("row: %d col: %d\n", row, col);
+	row -= 1; //set the last line of the screen to info and stuff
 
 	initmap(&map, row, col);
 	
